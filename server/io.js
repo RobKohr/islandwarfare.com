@@ -1,17 +1,28 @@
+const actions = require('./server-actions');
+
 exports.init = function ({ http }) {
   var io = require('socket.io')(http);
   io.on('connection', function (socket) {
     console.log('a user connected');
     socket.data = {};
-    socket.update = function(key, value){
+    socket.update = function (key, value) {
       socket.data[key] = value;
       socket.emit('update', socket.data);
     }
-    timeUpdater(socket);
-    socket.on('action', function(action){
-      
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+      clearInterval(socket.updaterId);
+      console.log(socket);
+    })
+    socket.updaterId = timeUpdater(socket);
+    socket.on('action', function ({action, params}) {
+      if(actions[action]){
+        if(!params) {
+          params = {};
+        }
+        actions[action](params, socket);
+      }
     });
-
   });
 }
 

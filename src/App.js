@@ -9,8 +9,12 @@ const Users = () => <h2>Users</h2>;
 
 const Login = ({ register }) => {
   const [count, setCount] = useState(0);
+  function onSubmit(event){
+    event.preventDefault();
+    sendAction('register');
+  }
   return (
-    <form id="login">
+    <form id="login" onSubmit={onSubmit}>
       {register && <h2>Register</h2>}
       {!register && <h2>Login</h2>}
       <p>
@@ -30,7 +34,7 @@ const Login = ({ register }) => {
       }
       <p>
         <label></label>
-        <input type="submit"></input>
+        <input type="submit" onClick={e => onSubmit(e)}></input>
       </p>
     </form>
   )
