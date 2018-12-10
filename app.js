@@ -1,4 +1,6 @@
 const { exec } = require('child_process');
+
+/* build app 
 exec('yarn build', (err, stdout, stderr) => {
   if (err) {
     // node couldn't execute the command
@@ -8,17 +10,12 @@ exec('yarn build', (err, stdout, stderr) => {
   console.log(`stdout: ${stdout}`);
   console.log(`stderr: ${stderr}`);
 });
-
+*/
 
 const express = require('express');
 const app = express();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-});
+require('./server/io').init({http})
 
 const bodyParser = require('body-parser');
 const path = require('path');
