@@ -16,6 +16,7 @@ exports.init = function ({ http }) {
     })
     socket.updaterId = timeUpdater(socket);
     socket.on('action', function ({action, params}) {
+      console.log({action, params})
       if(actions[action]){
         if(!params) {
           params = {};

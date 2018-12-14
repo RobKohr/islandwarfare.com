@@ -43,12 +43,12 @@ if(!websocketSessionId){
 }
 console.log(getCookie('websocketSessionId'));
 
-const sendAction = function(action, props){
-  socket.emit('action', {action:action, props:props});
+const sendAction = function(action, params){
+  socket.emit('action', {action:action, params:params});
 }
 
 socket.on('update', function(data){
-  console.log(data);
+  socket.onDataUpdate(data);
 });
 
 
@@ -65,10 +65,6 @@ function registerDataUpdateFunction(fun){
   socket.onDataUpdate = fun;
 }
 
-socket.on('dataUpdate', function(newData){
-  data = newData;
-  socket.onDataUpdate(data);
-});
 socket.on()
 
 /*
